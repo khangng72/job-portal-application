@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>Home Page</title>
+    <link
+            crossorigin="anonymous"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+            rel="stylesheet"
+    />
+    <style>
+        a {
+            text-decoration: none;
+        }
+
+        body {
+            background-color: #fefae0;
+            margin-top: 100px;
+        }
+
+        .navbar {
+            background-color: #bc6c25;
+            position: fixed;
+            top: 0; /* Positions the navbar at the top */
+            left: 0; /* Aligns it to the left */
+            width: 100%;
+            z-index: 20;
+        }
+
+        .nav-link {
+            color: #fefae0;
+        }
+
+        .nav-link:hover {
+            color: #283618;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand img {
+            width: 30px;
+            height: 30px;
+            margin-right: 5px;
+        }
+
+        .brand-name {
+            font-size: large;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <!-- App Name -->
+        <a class="navbar-brand" href="/">
+            <img alt="job-search-icon" src="/job-search.png"/>
+            <span class="brand-name">Job Portal Application</span>
+        </a>
+
+        <!-- Toggle Button for Mobile View -->
+        <button
+                class="navbar-toggler"
+                data-bs-target="#navbarNav"
+                data-bs-toggle="collapse"
+                type="button"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Links -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">All Jobs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Create Job</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container form-container">
+    <h2 class="form-title">Create New Job Listing</h2>
+    <form>
+        <!-- Job Title -->
+        <div class="mb-3">
+            <label class="form-label" for="jobTitle">Job Title</label>
+            <input
+                    class="form-control"
+                    id="jobTitle"
+                    placeholder="Enter the job title"
+                    required
+                    type="text"
+            />
+        </div>
+
+        <!-- Job Description -->
+        <div class="mb-3">
+            <label class="form-label" for="jobDescription">Job Description</label>
+            <textarea
+                    class="form-control"
+                    id="jobDescription"
+                    placeholder="Provide a detailed description of the job"
+                    required
+                    rows="4"
+            ></textarea>
+        </div>
+
+        <!-- Tech Stack -->
+        <div class="mb-3">
+            <label class="form-label" for="techStack">Tech Stack</label>
+            <input
+                    class="form-control"
+                    id="techStack"
+                    placeholder="e.g., Java, React, AWS"
+                    required
+                    type="text"
+            />
+        </div>
+
+        <!-- Requirements -->
+        <div class="mb-3">
+            <label class="form-label" for="requirements">Requirements</label>
+            <textarea
+                    class="form-control"
+                    id="requirements"
+                    placeholder="List the requirements for this job"
+                    required
+                    rows="4"
+            ></textarea>
+        </div>
+
+        <!-- Experience Level -->
+        <div class="mb-3">
+            <label class="form-label" for="experienceLevel"
+            >Experience Level</label
+            >
+            <select class="form-select" id="experienceLevel" required>
+                <option disabled selected value="">Select Experience Level</option>
+                <option value="entry">Entry Level</option>
+                <option value="mid">Mid Level</option>
+                <option value="senior">Senior Level</option>
+            </select>
+        </div>
+
+        <!-- Location -->
+        <div class="mb-3">
+            <label class="form-label" for="location">Location</label>
+            <input
+                    class="form-control"
+                    id="location"
+                    placeholder="Location of the job"
+                    required
+                    type="text"
+            />
+        </div>
+
+        <!-- Salary Range -->
+        <div class="mb-3">
+            <label class="form-label" for="salaryRange">Salary Range</label>
+            <input
+                    class="form-control"
+                    id="salaryRange"
+                    placeholder="e.g., $50,000 - $80,000"
+                    required
+                    type="text"
+            />
+        </div>
+
+        <!-- Application Deadline -->
+        <div class="mb-3">
+            <label class="form-label" for="deadline">Application Deadline</label>
+            <input class="form-control" id="deadline" required type="date"/>
+        </div>
+
+        <!-- Job Type -->
+        <div class="mb-3">
+            <label class="form-label">Job Type</label>
+            <div class="form-check">
+                <input
+                        checked
+                        class="form-check-input"
+                        id="fullTime"
+                        name="jobType"
+                        type="radio"
+                        value="fullTime"
+                />
+                <label class="form-check-label" for="fullTime">Full-Time</label>
+            </div>
+            <div class="form-check">
+                <input
+                        class="form-check-input"
+                        id="partTime"
+                        name="jobType"
+                        type="radio"
+                        value="partTime"
+                />
+                <label class="form-check-label" for="partTime">Part-Time</label>
+            </div>
+            <div class="form-check">
+                <input
+                        class="form-check-input"
+                        id="contract"
+                        name="jobType"
+                        type="radio"
+                        value="contract"
+                />
+                <label class="form-check-label" for="contract">Contract</label>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="mb-3 text-center">
+            <button class="btn btn-primary" type="submit">
+                Submit Job Listing
+            </button>
+        </div>
+    </form>
+</div>
+
+<script
+        crossorigin="anonymous"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+></script>
+</body>
+</html>

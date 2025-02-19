@@ -1,0 +1,88 @@
+<!-- src/main/resources/templates/fragments.html -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Fragments</title>
+    <style>
+        .navbar {
+            background-color: #bc6c25;
+            position: fixed;
+            top: 0; /* Positions the navbar at the top */
+            left: 0; /* Aligns it to the left */
+            width: 100%;
+            z-index: 20;
+        }
+
+        .nav-link {
+            color: #fefae0;
+        }
+
+        .nav-link:hover {
+            color: #283618;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand img {
+            width: 30px;
+            height: 30px;
+            margin-right: 5px;
+        }
+
+        .brand-name {
+            font-size: large;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<!-- Header Fragment -->
+<div th:fragment="header">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <!-- App Name -->
+            <a class="navbar-brand" href="/">
+                <img alt="job-search-icon" src="/job-search.png"/>
+                <span class="brand-name">Job Portal Application</span>
+            </a>
+
+            <!-- Toggle Button for Mobile View -->
+            <button
+                    class="navbar-toggler"
+                    data-bs-target="#navbarNav"
+                    data-bs-toggle="collapse"
+                    type="button"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar Links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">All Jobs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/create-new-job">Create Job</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<!-- Footer Fragment -->
+<div th:fragment="footer">
+    <footer>
+        <p>&copy; 2025 My Job Portal</p>
+    </footer>
+</div>
+</body>
+</html>
