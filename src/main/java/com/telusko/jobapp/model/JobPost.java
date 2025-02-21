@@ -46,7 +46,7 @@ public class JobPost {
         List<String> tech_stack = getRandomElement(techStacks);
         String location = getRandomElement(locations);
         String level = getRandomElement(levels);
-        Long min_salary = ThreadLocalRandom.current().nextLong(50000, 100000);
+        long min_salary = ThreadLocalRandom.current().nextLong(50000, 100000);
         Long max_salary = min_salary + ThreadLocalRandom.current().nextLong(10000, 50000);
         LocalDate deadline_date = LocalDate.now().plusDays(ThreadLocalRandom.current().nextInt(30, 180));
         String job_type = getRandomElement(jobTypes);
