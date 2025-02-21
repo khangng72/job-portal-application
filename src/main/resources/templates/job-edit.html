@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
-    <title>Create New Job</title>
+    <title>Create New Job Success</title>
     <link
             crossorigin="anonymous"
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -66,19 +66,48 @@
         .form-title {
             margin-bottom: 30px;
             text-align: center;
+            color: #3A7D44;
+        }
+
+        .job-type-check {
+            display: none;
+        }
+
+        .job-type {
+            display: flex;
+            gap: 5px;
+        }
+
+        .form-control:disabled, .form-control[disabled], .form-select:disabled {
+            background-color: #faedcd !important;
+            color: #666 !important;
         }
 
         .btn {
-            background-color: #283618;
-            color: whitesmoke;
-            font-weight: bold;
+            width: 100px;
         }
 
-        .btn:hover {
-            transform: scale(1.02);
-            background-color: #283618;
-            color: whitesmoke;
+        .btn-edit {
+            background-color: #e9c46a;
         }
+
+        .btn-edit:hover {
+            cursor: pointer;
+            background-color: #f7b538;
+        }
+
+        .btn-save {
+            background-color: #a7c957;
+
+            display: none;
+        }
+
+        .btn-save:hover {
+            background-color: #6a994e;
+            cursor: pointer;
+        }
+
+
     </style>
 </head>
 <body>
@@ -118,7 +147,7 @@
 </nav>
 
 <div class="container form-container shadow">
-    <h2 class="form-title">Create New Job Listing</h2>
+    <h2 class="form-title" th:text="${jobPost.getTitle()}"></h2>
     <form method="post" th:action="@{/create-new-job}" th:object="${jobPost}">
         <!-- Job Title -->
 
@@ -129,6 +158,7 @@
                     <label class="form-label" for="jobTitle">Job Title</label>
                     <input
                             class="form-control"
+                            disabled
                             id="jobTitle"
                             placeholder="Enter the job title"
                             required
@@ -141,10 +171,12 @@
                     <label class="form-label" for="techStack">Tech Stack</label>
                     <input
                             class="form-control"
+                            disabled
                             id="techStack"
                             name="techStack"
                             placeholder="e.g., Java, React, AWS"
                             required
+                            th:value="${#strings.listJoin(jobPost.getTech_stack(), ', ')}"
                             type="text"
                     />
                 </div>
@@ -153,6 +185,7 @@
                 <label class="form-label" for="jobDescription">Job Description</label>
                 <textarea
                         class="form-control"
+                        disabled
                         id="jobDescription"
                         placeholder="Provide a detailed description of the job"
                         required
@@ -167,7 +200,7 @@
                 <label class="form-label" for="experienceLevel"
                 >Experience Level</label
                 >
-                <select class="form-select" id="experienceLevel" required th:field="*{level}">
+                <select class="form-select" disabled id="experienceLevel" required th:field="*{level}">
                     <option disabled selected value="">Select Experience Level</option>
                     <option th:each="level:${levelsList}" th:text="${level}" th:value="${level}"></option>
                 </select>
@@ -177,6 +210,7 @@
                 <label class="form-label" for="location">Location</label>
                 <input
                         class="form-control"
+                        disabled
                         id="location"
                         placeholder="Location of the job"
                         required
@@ -192,11 +226,12 @@
                 <label class="form-label" for="salaryMax">Salary Max</label>
                 <input
                         class="form-control"
+                        disabled
                         id="salaryMax"
                         placeholder="Enter the maximum salary"
                         required
                         th:field="*{max_salary}"
-                        type="text"
+                        type="number"
                 />
             </div>
 
@@ -204,11 +239,12 @@
                 <label class="form-label" for="salaryMin">Salary Min</label>
                 <input
                         class="form-control"
+                        disabled
                         id="salaryMin"
                         placeholder="Enter the minimum salary"
                         required
                         th:field="*{min_salary}"
-                        type="text"
+                        type="number"
                 />
             </div>
         </div>
@@ -216,30 +252,42 @@
         <!-- Application Deadline -->
         <div class="mb-3">
             <label class="form-label" for="deadline">Application Deadline</label>
-            <input class="form-control" id="deadline" required th:field="*{deadline_date}" type="date"/>
+            <input class="form-control" disabled id="deadline"
+                   required th:field="*{deadline_date}" type="date"/>
         </div>
 
-        <!-- Job Type -->
-        <div class="mb-3">
+        <div class="mb-3 job-type">
+            <label class="form-label">Job Type: </label>
+            <div th:text="*{job_type}"></div>
+        </div>
+
+        <!-- Job Type Select-->
+        <div class="mb-3 job-type-check">
             <label class="form-label">Job Type</label>
             <div class="form-check" th:each="type:${jobTypesList}">
                 <input
                         class="form-check-input"
-                        name="jobType"
+                        name="job_type"
                         th:field="*{job_type}"
-                        th:id=" ${#strings.replace(type, ' ', '_')}"
+                        th:id="${#strings.replace(type, ' ', '_')}"
                         th:value="${type}"
                         type="radio"
                 />
-                <label class="form-check-label" th:for=" ${#strings.replace(type, ' ', '_')}" th:text="${type}"></label>
+                <label class="form-check-label" th:for="${#strings.replace(type, ' ', '_')}" th:text="${type}"></label>
             </div>
         </div>
 
         <!-- Submit Button -->
         <div class="mb-3 text-center">
-            <button class="btn" type="submit">
-                Submit Job Listing
-            </button>
+            <span class="btn btn-save" onclick="handleOnSaveEditJob()">
+                Save
+            </span>
+            <span class="btn btn-edit" onclick="handleOnClickEditButton_CreateNewJobSuccess()">
+                Edit
+            </span>
+            <a class="btn btn-secondary" href="/">
+                Home
+            </a>
         </div>
     </form>
 </div>
@@ -249,5 +297,6 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 ></script>
+<script defer th:src="@{/js/action.js}"></script>
 </body>
 </html>
