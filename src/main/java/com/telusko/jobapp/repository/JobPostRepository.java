@@ -109,4 +109,30 @@ public class JobPostRepository {
                 jobPost.getId()
         );
     }
+
+    public List<JobPost> findAllJobPost() {
+        String query = "SELECT * FROM JOB_POST";
+        RowMapper<JobPost> rowMapper = (rs, rowNum) -> {
+            JobPost jobPost = new JobPost();
+            jobPost.setId(rs.getLong("id"));
+            jobPost.setTitle(rs.getString("title"));
+            jobPost.setDescription(rs.getString("description"));
+            jobPost.setLocation(rs.getString("location"));
+            jobPost.setLevel(rs.getString("level"));
+            jobPost.setMax_salary(rs.getLong("max_salary"));
+            jobPost.setMin_salary(rs.getLong("min_salary"));
+            jobPost.setDeadline_date(rs.getDate("deadline_date").toLocalDate());
+            jobPost.setJob_type(rs.getString("job_type"));
+            return jobPost;
+        };
+
+        return jdbcTemplate.query(query, rowMapper);
+    }
+
+    public void deleteJobPostById(Long id) {
+        String query = "DELETE FROM JOB_POST WHERE id = ?";
+        String delete_tech_stack_query = "DELETE FROM TECH_STACK WHERE job_post_id = ?";
+        jdbcTemplate.update(delete_tech_stack_query, id);
+        jdbcTemplate.update(query, id);
+    }
 }

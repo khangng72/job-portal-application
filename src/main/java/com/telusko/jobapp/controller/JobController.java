@@ -63,11 +63,24 @@ public class JobController {
         return "redirect:/job/" + result_id.toString();
     }
 
+    @RequestMapping(value = "/all-jobs", method = RequestMethod.GET)
+    public String viewAllJobsPage(Model model) {
+        List<JobPost> jobPostList = jobPostService.findAllJobPost();
+        model.addAttribute("jobPostList", jobPostList);
+        return "all-jobs";
+    }
+
     @RequestMapping(value = "/save-edit", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<String> handleSaveEditJob(@RequestBody JobPost jobPost) {
         jobPostService.updateJobPost(jobPost);
         String result = "/job/" + jobPost.getId().toString();
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    public String deleteJobPost(@PathVariable Long id) {
+        jobPostService.deleteJobPostById(id);
+        return "redirect:/all-jobs";
     }
 }

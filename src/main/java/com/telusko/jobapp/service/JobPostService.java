@@ -42,4 +42,20 @@ public class JobPostService {
     public void updateJobPost(JobPost jobPost) {
         jobPostRepository.updateJobPost(jobPost);
     }
+
+    public List<JobPost> findAllJobPost() {
+        List<JobPost> jobPostList = jobPostRepository.findAllJobPost();
+
+        for (JobPost jobPost : jobPostList) {
+            List<String> techStack = jobPostRepository.findTechStackWithJobPostId(jobPost.getId());
+            jobPost.setTech_stack(techStack);
+        }
+
+        System.out.println(jobPostList);
+        return jobPostList;
+    }
+
+    public void deleteJobPostById(Long id) {
+        jobPostRepository.deleteJobPostById(id);
+    }
 }
